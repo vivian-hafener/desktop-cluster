@@ -1,0 +1,7 @@
+---
+- hosts: aspen
+  roles:
+    - geerlingguy.kubernetes
+
+- hosts: services
+  roles:
