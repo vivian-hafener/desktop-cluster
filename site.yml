@@ -1,7 +1,5 @@
 ---
 - hosts: aspen
   roles:
+    - geerlingguy.containerd
     - geerlingguy.kubernetes
-
-- hosts: services
-  roles:

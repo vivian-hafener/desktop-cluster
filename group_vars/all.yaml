@@ -1,2 +1,9 @@
 ---
+
+# Vars for geerligguy.containerd
+containerd_service_state: started
+containerd_service_enabled: true
+
+# Vars for geerlingguy.kubernetes
+kubernetes_version: '1.33'
 kubernetes_allow_pods_on_control_plane: true

@@ -1,4 +1,4 @@
 ---
 
 # Vars for geerlingguy.kubernetes
-kubernetes_role: "node"
+kubernetes_role: "control_plane"
