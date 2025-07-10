@@ -1,0 +1,9 @@
+---
+- name: Run updates
+  become: true
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+    update_only: true
+
