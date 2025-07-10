@@ -1,0 +1,3 @@
+[submodule "roles/ansible-role-slurm"]
+	path = roles/ansible-role-slurm
+	url = git@github.com:vivian-hafener/ansible-role-slurm.git
