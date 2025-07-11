@@ -2,8 +2,8 @@ aspen:
   hosts:
     n1.vhafener.com:
     n2.vhafener.com:
-    n3.vhafener.com:
+    # n3.vhafener.com:
 
-services:
-  hosts:
-    svc.vhafener.com:
+# services:
+#   hosts:
+#     svc.vhafener.com:

@@ -1,6 +1,8 @@
 ---
 - hosts: aspen
   roles:
-    - geerlingguy.containerd
-    - geerlingguy.kubernetes
+    - common
+    # - geerlingguy.containerd
+    # - geerlingguy.kubernetes
+    # - ansible-role-slurm
   

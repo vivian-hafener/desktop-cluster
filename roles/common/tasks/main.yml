@@ -1,4 +1,10 @@
 ---
+- name: Place SSH Key
+  ansible.posix.authorized_key:
+    user: vhafener
+    state: present
+    key: "{{ lookup('file', '/home/vhafener/.ssh/id_ed25519.pub') }}"
+
 - name: Run updates
   become: true
   dnf:
@@ -6,4 +12,3 @@
     state: latest
     update_cache: yes
     update_only: true
-
