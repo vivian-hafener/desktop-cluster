@@ -1,4 +1,11 @@
 ---
+# My vars:
+packages:
+  - clustershell
+  - htop
+  - vim
+  - nmap
+  - wireshark
 
 # Vars for geerligguy.containerd
 containerd_service_state: started
