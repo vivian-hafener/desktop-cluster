@@ -2,8 +2,7 @@
 # Run basic tasks and pre-k8s prep
 - hosts: aspen
   roles:
-  - role: common
-    tags: pre
+  - role: preflight
 
 # K8s containerd and kubernetes installs
 - hosts: aspen
@@ -15,8 +14,7 @@
 # K8s post-install configuration
 - hosts: aspen
   roles:
-  - role: common
-    tags: post
+  - role: midflight
 
 # Install Slurm
 - hosts: aspen
