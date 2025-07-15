@@ -1,0 +1,24 @@
+---
+- name: Open port 10259 for kube-scheduler
+  become: true
+  ansible.posix.firewalld:
+    port: 10259/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Open port 10257 for kube-controller-manager
+  become: true
+  ansible.posix.firewalld:
+    port: 10257/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Open port 2379-2380 for kube-controller-manager
+  become: true
+  ansible.posix.firewalld:
+    port: 2379-2380/tcp
+    permanent: true
+    state: enabled
+    immediate: true

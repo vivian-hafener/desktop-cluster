@@ -9,45 +9,6 @@
     src: "kubeadm-kubelet-config.j2"
     dest: "{{ kubernetes_kubeadm_kubelet_config_file_path }}"
 
-# - name: Open port 6443 for kubelet
-#   ansible.posix.firewalld:
-#     port: 6443/tcp
-#     permanent: true
-#     state: enabled
-
-# - name: Open port 10250 for kubelet
-#   ansible.posix.firewalld:
-#     port: 10250/tcp
-#     permanent: true
-#     state: enabled
-
-- name: Open port 10259 for kube-scheduler
-  ansible.posix.firewalld:
-    port: 10259/tcp
-    permanent: true
-    state: enabled
-    immediate: true
-
-- name: Open port 10257 for kube-controller-manager
-  ansible.posix.firewalld:
-    port: 10257/tcp
-    permanent: true
-    state: enabled
-    immediate: true
-
-- name: Open port 2379-2380 for kube-controller-manager
-  ansible.posix.firewalld:
-    port: 2379-2380/tcp
-    permanent: true
-    state: enabled
-    immediate: true
-
-# - name: Patch the k8s config file
-#   command: >
-#     kubeadm config migrate 
-#     --old-config {{ kubernetes_kubeadm_kubelet_config_file_path }}
-#     --new-config {{ kubernetes_kubeadm_kubelet_config_file_path }}
-
 - name: Initialize Kubernetes control plane with kubeadm init
   command: >
     kubeadm init

@@ -4,6 +4,7 @@
     user: vhafener
     state: present
     key: "{{ lookup('file', '/home/vhafener/.ssh/id_ed25519.pub') }}"
+  when: "'pre' in ansible_run_tags"
 
 - name: Place /etc/hosts
   become: true
@@ -13,6 +14,7 @@
     owner: root
     group: root
     mode: '0644'
+  when: "'pre' in ansible_run_tags"
 
 - name: Run updates
   become: true
@@ -21,23 +23,27 @@
     state: latest
     update_cache: yes
     update_only: true
+  when: "'pre' in ansible_run_tags"
 
 - name: Remove package that auto-enables swap on ZRAM
   become: true
   ansible.builtin.dnf:
     name: "zram-generator-defaults"
     state: absent
+  when: "'pre' in ansible_run_tags"
 
 - name: disable swap
   become: true
   ansible.builtin.command:
     cmd: swapoff -a
+  when: "'pre' in ansible_run_tags"
 
 # TODO n2 has different sudo perms for some reason which prevented this from propagating
 - name: enable ip_forward
   become: true
   ansible.builtin.command:
     cmd: "echo '1' > /proc/sys/net/ipv4/ip_forward"
+  when: "'pre' in ansible_run_tags"
 
 
 # - name: install epel-release
@@ -54,6 +60,7 @@
     state: present
   loop:
     "{{ packages }}"
+  when: "'pre' in ansible_run_tags"
 
 # This is a requirement for geerlingguy.kubernetes
 - name: Ensure br_netfilter is enabled.
@@ -62,6 +69,7 @@
     name: br_netfilter
     state: present
     persistent: present
+  when: "'pre' in ansible_run_tags"
 
 - name: Ensure overlay is enabled.
   become: true
@@ -69,14 +77,34 @@
     name: overlay
     state: present
     persistent: present
+  when: "'pre' in ansible_run_tags"
 
+# Set up controller firewall rules
+- include_tasks: control-firewalld.yml
+  when: kubernetes_role == 'control_plane'
+
+# Set up node firewall rules
+- include_tasks: node-firewalld.yml
 
 - name: Reload systemd daemon
   become: true
   ansible.builtin.systemd_service:
     daemon_reload: true
+  when: "'pre' in ansible_run_tags"
 
 - name: Reload systemd daemon
   become: true
   ansible.builtin.systemd_service:
     daemon_reexec: true
+  when: "'pre' in ansible_run_tags"
+
+
+- name: copy kubeconfig to user
+  become: true
+  ansible.builtin.copy:
+    src: /root/.kube/config
+    dest: /home/vhafener/.kube/config
+    owner: vhafener
+    group: vhafener
+    mode: 0600
+  when: "'post' in ansible_run_tags"
