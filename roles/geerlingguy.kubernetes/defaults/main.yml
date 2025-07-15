@@ -9,8 +9,8 @@ kubernetes_packages:
   - name: kubernetes-cni
     state: present
 
-kubernetes_version: '1.25'
-kubernetes_version_rhel_package: '1.25.1'
+kubernetes_version: '1.33'
+kubernetes_version_rhel_package: '1.33.0'
 
 kubernetes_role: control_plane
 
@@ -49,7 +49,7 @@ kubernetes_config_kube_proxy_configuration: {}
 
 kubernetes_apiserver_advertise_address: ''
 kubernetes_version_kubeadm: 'stable-{{ kubernetes_version }}'
-kubernetes_ignore_preflight_errors: 'all'
+# kubernetes_ignore_preflight_errors: 
 
 kubernetes_apt_release_channel: "stable"
 kubernetes_apt_repository: "https://pkgs.k8s.io/core:/{{ kubernetes_apt_release_channel }}:/v{{ kubernetes_version }}/deb/"

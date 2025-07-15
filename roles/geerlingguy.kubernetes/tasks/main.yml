@@ -23,6 +23,20 @@
 - include_tasks: kubelet-setup.yml  # deprecated
   when: kubernetes_kubelet_extra_args|length > 0
 
+- name: Open port 6443 for kubelet
+  ansible.posix.firewalld:
+    port: 6443/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Open port 10250 for kubelet
+  ansible.posix.firewalld:
+    port: 10250/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
 - name: Ensure kubelet is started and enabled at boot.
   service:
     name: kubelet

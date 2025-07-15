@@ -5,10 +5,78 @@
     state: present
     key: "{{ lookup('file', '/home/vhafener/.ssh/id_ed25519.pub') }}"
 
+- name: Place /etc/hosts
+  become: true
+  ansible.builtin.copy:
+    src: /etc/hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Run updates
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: "*"
     state: latest
     update_cache: yes
     update_only: true
+
+- name: Remove package that auto-enables swap on ZRAM
+  become: true
+  ansible.builtin.dnf:
+    name: "zram-generator-defaults"
+    state: absent
+
+- name: disable swap
+  become: true
+  ansible.builtin.command:
+    cmd: swapoff -a
+
+# TODO n2 has different sudo perms for some reason which prevented this from propagating
+- name: enable ip_forward
+  become: true
+  ansible.builtin.command:
+    cmd: "echo '1' > /proc/sys/net/ipv4/ip_forward"
+
+
+# - name: install epel-release
+#   become: true
+#   ansible.builtin.dnf:
+#     name: epel-release
+#     state: present
+#     enablerepo: extras
+
+- name: install packages
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    "{{ packages }}"
+
+# This is a requirement for geerlingguy.kubernetes
+- name: Ensure br_netfilter is enabled.
+  become: true
+  modprobe:
+    name: br_netfilter
+    state: present
+    persistent: present
+
+- name: Ensure overlay is enabled.
+  become: true
+  modprobe:
+    name: overlay
+    state: present
+    persistent: present
+
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reexec: true
