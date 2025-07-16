@@ -54,7 +54,20 @@
   loop:
     "{{ packages }}"
 
-# This is a requirement for geerlingguy.kubernetes
+- name: install mariadb-server on the controller
+  become: true
+  ansible.builtin.dnf:
+    name: mariadb-server
+    state: present
+  when: kubernetes_role == 'control_plane'
+
+- name: install pymysql on the controller
+  ansible.builtin.pip:
+    name: pymysql
+    state: present
+  when: kubernetes_role == 'control_plane'
+
+# These are requirements for geerlingguy.kubernetes
 - name: Ensure br_netfilter is enabled.
   become: true
   modprobe:
@@ -76,6 +89,8 @@
 # Set up node firewall rules
 - include_tasks: node-firewalld.yml
 
+
+# Reload systemd in order to ensure that changes have been applied
 - name: Reload systemd daemon
   become: true
   ansible.builtin.systemd_service:

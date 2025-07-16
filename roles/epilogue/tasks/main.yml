@@ -1,0 +1,7 @@
+---
+- name: Add Slurm LD_LIBRARY_PATH to user's homedir bashrc
+  ansible.builtin.lineinfile:
+    path: /home/vhafener/.bashrc
+    state: present
+    insertafter: "# .bashrc"
+    line: "export LD_LIBRARY_PATH=/usr/lib/slurm"

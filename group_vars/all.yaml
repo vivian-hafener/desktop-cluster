@@ -6,6 +6,12 @@ packages:
   - vim
   - nmap
   - wireshark
+  - mariadb
+  - python3
+  - python3-pip
+  - python3-mysql
+  - munge
+ansible_python_interpreter: /usr/bin/python3
 
 # Vars for geerligguy.containerd
 containerd_service_state: started
@@ -16,3 +22,9 @@ containerd_config_cgroup_driver_systemd: true
 # Vars for geerlingguy.kubernetes
 kubernetes_version: '1.33'
 kubernetes_allow_pods_on_control_plane: true
+
+# Vars for my ansible-role-slurm
+slurm_staging_dir: "/home/vhafener/slurm/staging"
+slurm_service_node: n1.vhafener.com
+update_slurm: false
+private_key_path: "~/.ssh/id_ed25519"

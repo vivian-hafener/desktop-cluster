@@ -4,6 +4,12 @@ aspen:
     n2.vhafener.com:
     # n3.vhafener.com:
 
-# services:
-#   hosts:
-#     svc.vhafener.com:
+vault:
+  hosts:
+    n1.vhafener.com:
+    n2.vhafener.com:
+
+slurm_compute:
+  hosts:
+    n2.vhafener.com:
+    # n3.vhafener.com:
