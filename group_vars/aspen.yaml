@@ -1,4 +1,31 @@
 ---
+# ============ System Configuration ============ 
+packages:
+  - clustershell
+  - htop
+  - vim
+  - nmap
+  - wireshark
+  - mariadb
+  - python3
+  - python3-pip
+  - python3-mysql
+  - munge
+  - helm
+  - glibc
 
-# Vars for geerlingguy.kubernetes
-kubernetes_role: "node"
+# ============ Firewalld ============ 
+node_open_ports:
+  - "6443/tcp" # Kubelet
+  - "10250/tcp" # Kubelet
+  - "6817-6818/tcp" # slurmd
+  - "53/udp" # K8s DNS
+  - "53/tcp" # K8s DNS
+  - "9153/tcp" # K8s DNS
+
+controller_open_ports:
+  - 10259/tcp # kube-scheduler
+  - 10257/tcp # kube-controller-manager
+  - 2379-2380/tcp # kube-controller-manager
+  - 6817-6819/tcp # slurm controller
+

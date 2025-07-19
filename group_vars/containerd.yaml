@@ -1,0 +1,5 @@
+---
+# ============ Containerd ============ 
+containerd_service_state: started
+containerd_service_enabled: true
+containerd_config_cgroup_driver_systemd: true

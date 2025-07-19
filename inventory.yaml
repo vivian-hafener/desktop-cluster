@@ -1,15 +1,33 @@
 aspen:
   hosts:
-    n1.vhafener.com:
-    n2.vhafener.com:
-    # n3.vhafener.com:
+    n[1:3].vhafener.com:
 
-vault:
+slurm_controller:
   hosts:
     n1.vhafener.com:
-    n2.vhafener.com:
 
 slurm_compute:
   hosts:
-    n2.vhafener.com:
-    # n3.vhafener.com:
+    n[2:3].vhafener.com:
+
+slurm:
+  children:
+    slurm_controller:
+    slurm_compute:
+
+kubernetes_control:
+  hosts:
+    n1.vhafener.com:
+
+kubernetes_workers:
+  hosts:
+    n[1:3].vhafener.com:
+
+kubernetes:
+  children:
+    kubernetes_control:
+    kubernetes_workers:
+
+containerd:
+  hosts:
+    n[1:3].vhafener.com:

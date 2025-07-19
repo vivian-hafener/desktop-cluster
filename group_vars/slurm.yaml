@@ -1,0 +1,51 @@
+---
+# ============ Cluster Spec ============ 
+slurm_controller_host: n1.vhafener.com
+slurm_service_node: n1.vhafener.com
+
+# ============ Installation ============ 
+update_slurm: false
+
+# Slurm installation directives
+slurm_major_version: 25
+slurm_install_from_binaries: true
+
+# Slurm Binary Installation Parameters
+slurm_staging_dir: "/home/vhafener/slurm/staging"
+slurm_bin_dir: /usr/bin
+slurm_sbin_dir: /usr/local/sbin
+slurm_lib_dir: /usr/lib
+slurm_man_dir: /usr/share/man
+slurm_sysconf_dir: /etc/slurm
+
+# Munged
+munge_key_path: /home/vhafener/munge.key
+slurm_munge_key_to_nfs: false
+# munge_key_path: "/etc/munge/munge.key"
+
+# SSH
+private_key_path: "~/.ssh/id_ed25519"
+
+# Systemd Services
+slurmctld_service: slurmctld.service
+
+# MariaDB
+slurm_mysql_password: !vault | 
+          $ANSIBLE_VAULT;1.1;AES256
+          33313438383834393139316231393730353832323232313832393238313161393765316263336431
+          3932303366663864666237326330383561333933326162390a393734323732663932323164316436
+          33326663366330653634306530393230643938343436613162646131323932363136366666376632
+          3732363363353735390a306133633063363636313435396237393930336265316433633231386130
+          3931
+
+# ============ Slurm Configuration ============ 
+slurm_first_job_id: "1"
+nodeBase: "n"
+slurm_compute_nodes: "{{ nodeBase }}[2-3]"
+slurm_nodelist:
+  - "NodeName={{ slurm_compute_nodes }} RealMemory=16000 "
+slurm_partitionlist:
+  - "PartitionName=batch Nodes={{ slurm_compute_nodes }} Default=NO MaxTime=INFINITE State=UP DefaultTime=2:00:00"
+
+slurm_ExtraParamsList:
+  - PluginDir="{{ slurm_lib_dir }}/slurm" 

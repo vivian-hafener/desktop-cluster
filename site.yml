@@ -1,29 +1,33 @@
 ---
-# Run basic tasks and pre-k8s prep
-# - hosts: aspen
-#   roles:
-#   - preflight
-#   - epilogue
+- name: Preflight
+  hosts: aspen
+  roles:
+    - preflight
 
-# # K8s containerd and kubernetes installs
-# - hosts: aspen
-#   become: true
-#   roles:
-#     - geerlingguy.containerd
-#     - geerlingguy.kubernetes
-  
-# # K8s post-install configuration
-# - hosts: aspen
-#   roles:
-#   - role: midflight
+- name: Install and configure Containerd
+  hosts: containerd
+  become: true
+  roles:
+    - geerlingguy.containerd
 
-# Install Slurm
-- hosts: aspen
+- name: Install and configure Kubernetes
+  hosts: kubernetes
+  become: true
+  roles:
+    - geerlingguy.kubernetes
+
+# - name: Install and configure slurm-operator
+#   hosts: n1.vhafener.com
+#   roles:
+#     - ansible-role-slurm-operator
+
+- name: Install Slurm
+  hosts: slurm
   become: true
   roles:
     - ansible-role-slurm
 
-# Slurm post-install configuration
-- hosts: aspen
+- name: Post-install configuration
+  hosts: aspen
   roles:
     - epilogue

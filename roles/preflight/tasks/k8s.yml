@@ -1,0 +1,19 @@
+---
+- name: Remove package that auto-enables swap on ZRAM
+  become: true
+  ansible.builtin.dnf:
+    name: "zram-generator-defaults"
+    state: absent
+
+- name: Disable swap
+  become: true
+  ansible.builtin.command:
+    cmd: swapoff -a
+  changed_when: true
+
+# TODO n2 has different sudo perms for some reason which prevented this from propagating
+- name: Enable ip_forward
+  become: true
+  ansible.builtin.command:
+    cmd: "echo '1' > /proc/sys/net/ipv4/ip_forward"
+  changed_when: true

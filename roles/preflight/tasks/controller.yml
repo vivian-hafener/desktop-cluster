@@ -1,0 +1,22 @@
+---
+- name: Install mariadb-server on the controller
+  become: true
+  ansible.builtin.dnf:
+    name: mariadb-server
+    state: present
+  when: kubernetes_role == 'control_plane'
+
+- name: Install pymysql on the controller
+  ansible.builtin.pip:
+    name: pymysql
+    state: present
+  when: kubernetes_role == 'control_plane'
+
+- name: Open port 10259 for kube-scheduler
+  become: true
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ controller_open_ports }}"

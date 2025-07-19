@@ -1,6 +1,4 @@
 ---
 
-# Vars for geerlingguy.kubernetes
+# ============ Kubernetes ============ 
 kubernetes_role: "control_plane"
-slurm_controller_host: n1.vhafener.com
-slurm_service_node: n1.vhafener.com

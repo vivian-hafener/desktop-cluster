@@ -1,5 +1,5 @@
 ---
-- name: copy kubeconfig to user
+- name: Copy kubeconfig to user
   become: true
   ansible.builtin.copy:
     remote_src: true
@@ -7,7 +7,7 @@
     dest: /home/vhafener/.kube/config
     owner: vhafener
     group: vhafener
-    mode: 0600
+    mode: '0600'
   when: kubernetes_role == 'control_plane'
 
 - name: Copy kubeconfig to local machine

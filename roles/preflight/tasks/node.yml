@@ -1,0 +1,16 @@
+---
+- name: Open ports for services
+  become: true
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ node_open_ports }}"
+
+- name: Enable kernel modules
+  community.general.modprobe:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    persistent: "{{ item.persistent }}"
+  loop: "{{ node_kernel_modules }}"
