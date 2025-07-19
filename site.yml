@@ -16,6 +16,11 @@
   roles:
     - geerlingguy.kubernetes
 
+# - name: Configure slurm-operator storage
+#   hosts: n1.vhafener.com
+#   roles:
+#     - ansible-role-slurm-operator-storage
+
 # - name: Install and configure slurm-operator
 #   hosts: n1.vhafener.com
 #   roles:
