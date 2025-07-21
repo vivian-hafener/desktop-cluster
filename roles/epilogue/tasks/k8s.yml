@@ -17,3 +17,26 @@
     dest: /home/vhafener/.kube/config
     flat: true
   when: kubernetes_role == 'control_plane'
+
+- name: Add repo for NFS external Provisioner
+  when: kubernetes_role == 'control_plane'
+  kubernetes.core.helm_repository:
+    name: nfs-subdir-external-provisioner
+    repo_url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    repo_state: present
+
+- name: Install NFS External Provisioner
+  when: kubernetes_role == 'control_plane'
+  kubernetes.core.helm:
+    update_repo_cache: true
+    name: nfs-subdir-external-provisioner
+    chart_ref: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
+    release_namespace: kube-system
+    values:
+      nfs:
+        server: "{{ nfs_server }}"
+        path: "{{ nfs_path }}"
+      storageClass:
+        onDelete: "{{ storageclass_ondelete }}"
+  retries: 1
+  delay: 5

@@ -13,6 +13,7 @@ packages:
   - munge
   - helm
   - glibc
+  - nfs-utils
 
 # ============ Firewalld ============ 
 node_open_ports:
@@ -22,10 +23,18 @@ node_open_ports:
   - "53/udp" # K8s DNS
   - "53/tcp" # K8s DNS
   - "9153/tcp" # K8s DNS
+  - "1110/tcp" # NFS Cluster status
+  - "1110/udp" # NFS Client status
+  - 111/tcp # NFS Client
+  - 111/udp # NFS Client
 
 controller_open_ports:
   - 10259/tcp # kube-scheduler
   - 10257/tcp # kube-controller-manager
   - 2379-2380/tcp # kube-controller-manager
   - 6817-6819/tcp # slurm controller
+  - 111/tcp # NFS Server
+  - 111/udp # NFS Server
+  - 2049/udp # NFS Server
+  - 2049/tcp # NFS Server
 

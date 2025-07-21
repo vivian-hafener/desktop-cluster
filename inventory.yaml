@@ -31,3 +31,7 @@ kubernetes:
 containerd:
   hosts:
     n[1:3].vhafener.com:
+
+nfs-servers:
+  hosts:
+    n1.vhafener.com:

@@ -4,35 +4,41 @@
   roles:
     - preflight
 
-- name: Install and configure Containerd
-  hosts: containerd
+- name: Configure NFS shares
+  hosts: nfs-servers
   become: true
   roles:
-    - geerlingguy.containerd
+    - ansible-role-nfs
 
-- name: Install and configure Kubernetes
-  hosts: kubernetes
-  become: true
-  roles:
-    - geerlingguy.kubernetes
+# - name: Install and configure Containerd
+#   hosts: containerd
+#   become: true
+#   roles:
+#     - geerlingguy.containerd
+
+# - name: Install and configure Kubernetes
+#   hosts: kubernetes
+#   become: true
+#   roles:
+#     - geerlingguy.kubernetes
 
 # - name: Configure slurm-operator storage
 #   hosts: n1.vhafener.com
 #   roles:
 #     - ansible-role-slurm-operator-storage
 
-# - name: Install and configure slurm-operator
-#   hosts: n1.vhafener.com
+# - name: Install Slurm
+#   hosts: slurm
+#   become: true
 #   roles:
-#     - ansible-role-slurm-operator
-
-- name: Install Slurm
-  hosts: slurm
-  become: true
-  roles:
-    - ansible-role-slurm
+#     - ansible-role-slurm
 
 - name: Post-install configuration
   hosts: aspen
   roles:
     - epilogue
+
+- name: Install and configure slurm-operator
+  hosts: n1.vhafener.com
+  roles:
+    - ansible-role-slurm-operator

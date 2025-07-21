@@ -1,0 +1,5 @@
+---
+# ============ NFS Server Config ============ 
+nfs_export_dirs:
+  - "/srv/nfs"
+nfs_exports: ["/srv/nfs    n1.vhafener.com(rw,sync,no_root_squash)", "/srv/nfs    n2.vhafener.com(rw,sync,no_root_squash)", "/srv/nfs    n3.vhafener.com(rw,sync,no_root_squash)"]

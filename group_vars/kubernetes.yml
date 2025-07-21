@@ -5,7 +5,11 @@ kubernetes_version: '1.33'
 kubernetes_version_rhel_package: '1.33.0'
 kubernetes_allow_pods_on_control_plane: true
 
-
 node_kernel_modules:
   - {name: "br_netfilter", state: "present", persistent: "present"} # Kubernetes
   - {name: "br_netfilter", state: "present", persistent: "present"} # Kubernetes
+
+# NFS Provisioner Config
+nfs_server: "n1.vhafener.com"
+nfs_path: "/srv/nfs"
+storageclass_ondelete: true
