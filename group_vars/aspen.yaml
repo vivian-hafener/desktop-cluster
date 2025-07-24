@@ -14,8 +14,11 @@ packages:
   - helm
   - glibc
   - nfs-utils
+  - git
+  - make
 
 # ============ Firewalld ============ 
+firewall_active: false
 node_open_ports:
   - "6443/tcp" # Kubelet
   - "10250/tcp" # Kubelet
@@ -27,6 +30,8 @@ node_open_ports:
   - "1110/udp" # NFS Client status
   - 111/tcp # NFS Client
   - 111/udp # NFS Client
+  - 9153/tcp # Kube-dns
+  - 3305/tcp # Mariadb
 
 controller_open_ports:
   - 10259/tcp # kube-scheduler
@@ -37,4 +42,6 @@ controller_open_ports:
   - 111/udp # NFS Server
   - 2049/udp # NFS Server
   - 2049/tcp # NFS Server
+  - "53/udp" # K8s DNS
+  - "53/tcp" # K8s DNS
 

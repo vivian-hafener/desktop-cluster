@@ -20,3 +20,4 @@
     state: enabled
     immediate: true
   loop: "{{ controller_open_ports }}"
+  when: firewall_active == true

@@ -39,11 +39,27 @@ slurm_mysql_password: !vault |
           3931
 
 # ============ Slurm Configuration ============ 
+
+#PID Files
+slurm_SlurmctldPidFile: "/var/run/slurm/slurmctld.pid"
+slurm_SlurmdbdPidFile: "/var/run/slurm/slurmdbd.pid"
+slurm_SlurmdPidFile: "/var/run/slurm/slurmd.pid"
+
+# Scheduler config
+slurm_clustername: aspen
 slurm_first_job_id: "1"
+slurm_select_type: "select/cons_tres"
+
+# Node config
+slurm_with_gpu: false
 nodeBase: "n"
 slurm_compute_nodes: "{{ nodeBase }}[2-3]"
+slurm_compute_realmemory: "13000"
+slurm_compute_sockets: "1"
+slurm_compute_corespersocket: "4"
+slurm_compute_threadspercore: "2"
 slurm_nodelist:
-  - "NodeName={{ slurm_compute_nodes }} RealMemory=16000 "
+  - "NodeName={{ slurm_compute_nodes }} RealMemory={{ slurm_compute_realmemory }} "
 slurm_partitionlist:
   - "PartitionName=batch Nodes={{ slurm_compute_nodes }} Default=NO MaxTime=INFINITE State=UP DefaultTime=2:00:00"
 

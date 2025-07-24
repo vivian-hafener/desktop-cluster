@@ -7,8 +7,10 @@
     state: enabled
     immediate: true
   loop: "{{ node_open_ports }}"
+  when: firewall_active == true
 
 - name: Enable kernel modules
+  become: true
   community.general.modprobe:
     name: "{{ item.name }}"
     state: "{{ item.state }}"

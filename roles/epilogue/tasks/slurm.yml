@@ -1,33 +1,64 @@
 ---
-- name: Add Slurm LD_LIBRARY_PATH to user's homedir bashrc
-  ansible.builtin.lineinfile:
-    path: /home/vhafener/.bashrc
-    state: present
-    insertafter: "# .bashrc"
-    line: "export LD_LIBRARY_PATH=/usr/lib/slurm"
+# - name: Add Slurm LD_LIBRARY_PATH to user's homedir bashrc
+#   ansible.builtin.lineinfile:
+#     path: /home/vhafener/.bashrc
+#     state: present
+#     insertafter: "# .bashrc"
+#     line: "export LD_LIBRARY_PATH=/usr/lib/slurm"
 
-- name: Run ldconfig after library install
-  become: true
-  ansible.builtin.command:
-    cmd: ldconfig
-  changed_when: true
+# - name: Run ldconfig after library install
+#   become: true
+#   ansible.builtin.command:
+#     cmd: ldconfig
+#   changed_when: true
 
-- name: Fix directory permissions in Slurm directories
-  become: true
-  ansible.builtin.file:
-    path: "{{ item }}"
-    mode: '0755'
-    recurse: true
-  loop:
-    - /usr/lib/slurm
+# - name: Fix directory permissions in Slurm directories
+#   become: true
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     mode: '0755'
+#     recurse: true
+#   loop:
+#     - /usr/lib/slurm
 
-- name: Fix directory permissions in Slurm conf dir
-  become: true
-  ansible.builtin.file:
-    path: "{{ item }}"
-    owner: slurm
-    group: slurm
-    mode: '0755'
-    recurse: true
-  loop:
-    - /etc/slurm
+# - name: Fix directory permissions in Slurm conf dir
+#   become: true
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     owner: slurm
+#     group: slurm
+#     mode: '0755'
+#     recurse: true
+#   loop:
+#     - /etc/slurm
+
+# - name: Create the source dir for the following symlink
+#   become: true
+#   ansible.builtin.file:
+#     path: /home/vhafener/slurm/25.05/ponderosa
+#     state: directory
+#     owner: slurm
+#     group: slurm
+#     mode: '0755'
+
+# - name: Create a hardlink for compiled slurmdbd.conf path
+#   become: true
+#   ansible.builtin.file:
+#     src: /etc/slurm/slurmdbd.conf
+#     dest: /home/vhafener/slurm/25.05/ponderosa/etc/slurmdbd.conf
+#     owner: slurm
+#     group: slurm
+#     mode: '0755'
+#     state: hard
+
+# - name: Create a symlink for compiled slurm-conf directory
+#   become: true
+#   ansible.builtin.file:
+#     src: /etc/slurm
+#     dest: /home/vhafener/slurm/25.05/ponderosa/etc
+#     owner: slurm
+#     group: slurm
+#     mode: '0755'
+#     state: link
+
+#   when: (slurm_accounting_storage_host == inventory_hostname)

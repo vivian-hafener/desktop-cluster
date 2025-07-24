@@ -1,6 +1,6 @@
 aspen:
   hosts:
-    n[1:3].vhafener.com:
+    n[1:4].vhafener.com:
 
 slurm_controller:
   hosts:
@@ -8,7 +8,7 @@ slurm_controller:
 
 slurm_compute:
   hosts:
-    n[2:3].vhafener.com:
+    n[2:4].vhafener.com:
 
 slurm:
   children:
@@ -21,7 +21,7 @@ kubernetes_control:
 
 kubernetes_workers:
   hosts:
-    n[1:3].vhafener.com:
+    n[1:4].vhafener.com:
 
 kubernetes:
   children:
@@ -30,7 +30,7 @@ kubernetes:
 
 containerd:
   hosts:
-    n[1:3].vhafener.com:
+    n[1:4].vhafener.com:
 
 nfs-servers:
   hosts:

@@ -38,5 +38,7 @@
         path: "{{ nfs_path }}"
       storageClass:
         onDelete: "{{ storageclass_ondelete }}"
+        archiveOnDelete: false
+    force: true
   retries: 1
   delay: 5
