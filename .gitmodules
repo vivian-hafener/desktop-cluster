@@ -1,3 +1,6 @@
 [submodule "roles/ansible-role-slurm-operator"]
 	path = roles/ansible-role-slurm-operator
 	url = git@github.com:vivian-hafener/ansible-role-slurm-operator.git
+[submodule "roles/ansible-role-slurm"]
+	path = roles/ansible-role-slurm
+	url = git@github.com:vivian-hafener/ansible-role-slurm.git
