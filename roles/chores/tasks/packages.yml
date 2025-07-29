@@ -1,0 +1,9 @@
+---
+- name: Run updates
+  become: true
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: true
+    update_only: true
+

@@ -1,0 +1,11 @@
+---
+- name: Install Slurm
+  hosts: slurm
+  become: true
+  roles:
+    - ansible-role-slurm
+
+- name: Install and configure Slinky Helm charts
+  hosts: n1.vhafener.com
+  roles:
+    - ansible-role-slurm-operator

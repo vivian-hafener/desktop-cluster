@@ -1,6 +1,3 @@
 ---
-- name: Slurm post-install tasks
-  ansible.builtin.include_tasks: slurm.yml
-
 - name: Kubernetes post-install tasks
   ansible.builtin.include_tasks: k8s.yml

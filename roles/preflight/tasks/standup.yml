@@ -29,3 +29,10 @@
     state: present
   loop:
     "{{ packages }}"
+
+# - name: Fix LVS sizing # Default fedora does strange, strange things with your LVM setup
+#   become: true
+#   community.general.lvol:
+#     vg: fedora
+#     lv: root
+#     size: 221G

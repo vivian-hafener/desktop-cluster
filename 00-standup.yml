@@ -1,0 +1,39 @@
+---
+- name: Preflight
+  hosts: aspen
+  roles:
+    - preflight
+
+- name: Configure NFS shares
+  hosts: nfs-servers
+  become: true
+  roles:
+    - ansible-role-nfs
+
+- name: Install and configure Containerd
+  hosts: containerd
+  become: true
+  roles:
+    - geerlingguy.containerd
+
+- name: Install and configure Kubernetes
+  hosts: kubernetes
+  become: true
+  roles:
+    - geerlingguy.kubernetes
+
+- name: Install Slurm
+  hosts: slurm
+  become: true
+  roles:
+    - ansible-role-slurm
+
+- name: Post-install configuration
+  hosts: aspen
+  roles:
+    - epilogue
+
+- name: Install and configure Slinky Helm charts
+  hosts: n1.vhafener.com
+  roles:
+    - ansible-role-slurm-operator
