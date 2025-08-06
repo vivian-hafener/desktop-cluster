@@ -1,59 +1,48 @@
 ---
-# ============ Cluster Spec ============ 
-slurm_controller_host: n1.vhafener.com
-slurm_service_node: n1.vhafener.com
+# ============ Desired system state ============
+# You should not need to touch variables outside of this space
 
-# ============ Installation ============ 
-update_slurm: false
+slinky_devel: false # This is unsafe and show not be used in production deployments
 
-# Slurm installation directives
-slurm_major_version: 25
-slurm_install_from_binaries: true
+# Slurm state
+slurm_src:
+  repo: "git@gitlab.com:SchedMD/dev/slurm.git"
+  tag: "slurm-25-05-1-1"
+  version: "25.05"
+  major_version: "25"
 
-# Slurm Binary Installation Parameters
-slurm_staging_dir: "/home/vhafener/slurm/staging"
-slurm_bin_dir: /usr/bin
-slurm_sbin_dir: /usr/local/sbin
-slurm_lib_dir: /usr/lib
-slurm_man_dir: /usr/share/man
-slurm_sysconf_dir: /etc/slurm
+accept_gitlab_hostkey: true
 
-# Munged
-munge_key_path: /home/vhafener/munge.key
-slurm_munge_key_to_nfs: false
-# munge_key_path: "/etc/munge/munge.key"
+# Chart state
+slurm_chart_state: present
+slurm_operator_chart_state: present
+slurm_bridge_chart_state: absent
 
-# SSH
-private_key_path: "~/.ssh/id_ed25519"
+# Local chart configuration
+slinky_use_local_charts: false
+slinky_chart_dir: "/home/vhafener/charts"
+slinky_repo_root: "git@gitlab.com:SchedMD/slinky-dev"
 
-# Systemd Services
-slurmctld_service: slurmctld.service
+slurm_operator_version: "main"
+#slurm_operator_chart_ref: "{{ slinky_chart_dir }}/slurm-operator/helm/slurm-operator"
+#slurm_chart_ref: "{{ slinky_chart_dir }}/slurm-operator/helm/slurm"
+#slurm_bridge_chart_ref: "{{ slinky_chart_dir }}/slurm-bridge/helm/slurm-bridge"
+slurm_bridge_version: "main"
 
-# MariaDB
-slurm_mysql_password: !vault | 
-          $ANSIBLE_VAULT;1.1;AES256
-          33313438383834393139316231393730353832323232313832393238313161393765316263336431
-          3932303366663864666237326330383561333933326162390a393734323732663932323164316436
-          33326663366330653634306530393230643938343436613162646131323932363136366666376632
-          3732363363353735390a306133633063363636313435396237393930336265316433633231386130
-          3931
+reconfigure_slurm: true
 
-# ============ Slurm Configuration ============ 
-
-#PID Files
-slurm_SlurmctldPidFile: "/var/run/slurm/slurmctld.pid"
-slurm_SlurmdbdPidFile: "/var/run/slurm/slurmdbd.pid"
-slurm_SlurmdPidFile: "/var/run/slurm/slurmd.pid"
+# ============ Cluster Configuration ============ 
+# slurmctld_service_extra_flags: "-i"
 
 # Scheduler config
-slurm_clustername: aspen
 slurm_first_job_id: "1"
-slurm_select_type: "select/cons_tres"
 
 # Node config
-slurm_with_gpu: false
-nodeBase: "n"
-slurm_compute_nodes: "{{ nodeBase }}[2-3]"
+# slurm_debug_flags: NetworkRaw
+slurmctld_debug: "debug2"
+slurmd_debug: "debug2"
+node_base: "n"
+slurm_compute_nodes: "{{ node_base }}[2-4].vhafener.com"
 slurm_compute_realmemory: "13000"
 slurm_compute_sockets: "1"
 slurm_compute_corespersocket: "4"
@@ -63,5 +52,24 @@ slurm_nodelist:
 slurm_partitionlist:
   - "PartitionName=batch Nodes={{ slurm_compute_nodes }} Default=NO MaxTime=INFINITE State=UP DefaultTime=2:00:00"
 
-slurm_ExtraParamsList:
-  - PluginDir="{{ slurm_lib_dir }}/slurm" 
+
+# ============ Installation Configuration ============ 
+
+# Munged
+munge_key_path: /home/vhafener/munge.key
+
+# MariaDB
+slurm_mysql_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66343266316261633135653839323461626630363938616161323763316234333135396161343235
+          6231643465656536646431313262333662376663363135630a316132363335633565633363643964
+          63333465666364366262646634333062663561363730373561646662356665356630643035356364
+          6631343266623935370a386133313264363562623433323863633765623536623335386537343539
+          6337
+slurmdb_root_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66343266316261633135653839323461626630363938616161323763316234333135396161343235
+          6231643465656536646431313262333662376663363135630a316132363335633565633363643964
+          63333465666364366262646634333062663561363730373561646662356665356630643035356364
+          6631343266623935370a386133313264363562623433323863633765623536623335386537343539
+          6337

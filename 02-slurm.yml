@@ -4,8 +4,10 @@
   become: true
   roles:
     - ansible-role-slurm
+  tags: slurm
 
 - name: Install and configure Slinky Helm charts
   hosts: n1.vhafener.com
   roles:
     - ansible-role-slurm-operator
+  tags: slinky

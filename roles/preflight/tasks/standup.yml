@@ -35,4 +35,4 @@
 #   community.general.lvol:
 #     vg: fedora
 #     lv: root
-#     size: 221G
+#     size: 220G

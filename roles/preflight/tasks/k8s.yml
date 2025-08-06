@@ -11,9 +11,11 @@
     cmd: swapoff -a
   changed_when: true
 
-# TODO n2 has different sudo perms for some reason which prevented this from propagating
-- name: Enable ip_forward
+- name: Set IP Forwarding in /proc
   become: true
-  ansible.builtin.command:
-    cmd: "echo '1' > /proc/sys/net/ipv4/ip_forward"
-  changed_when: true
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+    state: present
+    reload: true

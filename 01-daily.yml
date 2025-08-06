@@ -3,3 +3,8 @@
   hosts: aspen
   roles:
     - chores
+
+- name: Post-install configuration
+  hosts: aspen
+  roles:
+    - epilogue
