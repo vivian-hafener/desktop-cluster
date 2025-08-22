@@ -1,5 +1,6 @@
 ---
-# ============ Kubernetes ============ 
+# ============ Kubernetes ============
+kubernetes_control_plane: "n1.vhafener.com"
 kubernetes_role: "node"
 kubernetes_version: '1.33'
 kubernetes_version_rhel_package: '1.33.0'

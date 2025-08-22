@@ -30,6 +30,13 @@
   loop:
     "{{ packages }}"
 
+# - name: Configure clustershell
+#   block:
+#     - name: Creates /etc/clustershell
+#       ansible.builtin.file:
+#         path: /etc/clustershell
+#         owner: 
+
 # - name: Fix LVS sizing # Default fedora does strange, strange things with your LVM setup
 #   become: true
 #   community.general.lvol:

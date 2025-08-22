@@ -10,11 +10,12 @@
   roles:
     - ansible-role-nfs
 
-- name: Install and configure Containerd
+- name: Install and configure Containerd and Docker
   hosts: containerd
   become: true
   roles:
     - geerlingguy.containerd
+    - geerlingguy.docker
 
 - name: Install and configure Kubernetes
   hosts: kubernetes

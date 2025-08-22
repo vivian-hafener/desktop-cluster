@@ -42,3 +42,14 @@
     force: true
   retries: 1
   delay: 5
+
+- name: Make nfs-client the default storageclass
+  when: kubernetes_role == 'control_plane'
+  ansible.builtin.command:
+    argv:
+      - kubectl
+      - patch
+      - storageclass 
+      - nfs-client
+      - -p 
+      - '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'

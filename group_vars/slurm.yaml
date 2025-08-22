@@ -2,12 +2,12 @@
 # ============ Desired system state ============
 # You should not need to touch variables outside of this space
 
-slinky_devel: false # This is unsafe and show not be used in production deployments
+slinky_devel: true # This is unsafe and show not be used in production deployments
 
 # Slurm state
 slurm_src:
   repo: "git@gitlab.com:SchedMD/dev/slurm.git"
-  tag: "slurm-25-05-1-1"
+  tag: "slurm-25-05-2-1"
   version: "25.05"
   major_version: "25"
 
@@ -19,15 +19,12 @@ slurm_operator_chart_state: present
 slurm_bridge_chart_state: absent
 
 # Local chart configuration
-slinky_use_local_charts: false
+slinky_use_local_charts: true
 slinky_chart_dir: "/home/vhafener/charts"
 slinky_repo_root: "git@gitlab.com:SchedMD/slinky-dev"
 
-slurm_operator_version: "main"
-#slurm_operator_chart_ref: "{{ slinky_chart_dir }}/slurm-operator/helm/slurm-operator"
-#slurm_chart_ref: "{{ slinky_chart_dir }}/slurm-operator/helm/slurm"
-#slurm_bridge_chart_ref: "{{ slinky_chart_dir }}/slurm-bridge/helm/slurm-bridge"
-slurm_bridge_version: "main"
+slurm_operator_git_tag: "v0.3.1"
+slurm_bridge_git_tag: "v0.3.1"
 
 reconfigure_slurm: true
 
